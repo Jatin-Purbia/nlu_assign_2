@@ -1,0 +1,83 @@
+{
+  "rnn": {
+    "0.5": {
+      "n_generated": 500,
+      "novelty_rate": 0.0,
+      "diversity": 0.586
+    },
+    "0.8": {
+      "n_generated": 500,
+      "novelty_rate": 0.01,
+      "diversity": 0.78
+    },
+    "1.0": {
+      "n_generated": 500,
+      "novelty_rate": 0.028,
+      "diversity": 0.78
+    },
+    "1.2": {
+      "n_generated": 500,
+      "novelty_rate": 0.108,
+      "diversity": 0.812
+    },
+    "1.5": {
+      "n_generated": 500,
+      "novelty_rate": 0.262,
+      "diversity": 0.868
+    }
+  },
+  "blstm": {
+    "0.5": {
+      "n_generated": 500,
+      "novelty_rate": 0.732,
+      "diversity": 0.162
+    },
+    "0.8": {
+      "n_generated": 500,
+      "novelty_rate": 0.876,
+      "diversity": 0.378
+    },
+    "1.0": {
+      "n_generated": 500,
+      "novelty_rate": 0.924,
+      "diversity": 0.546
+    },
+    "1.2": {
+      "n_generated": 500,
+      "novelty_rate": 0.948,
+      "diversity": 0.714
+    },
+    "1.5": {
+      "n_generated": 499,
+      "novelty_rate": 0.9719438877755511,
+      "diversity": 0.8396793587174348
+    }
+  },
+  "attention": {
+    "0.5": {
+      "n_generated": 18,
+      "novelty_rate": 1.0,
+      "diversity": 0.3333333333333333
+    },
+    "0.8": {
+      "n_generated": 59,
+      "novelty_rate": 1.0,
+      "diversity": 0.3898305084745763
+    },
+    "1.0": {
+      "n_generated": 129,
+      "novelty_rate": 0.9922480620155039,
+      "diversity": 0.4496124031007752
+    },
+    "1.2": {
+      "n_generated": 172,
+      "novelty_rate": 1.0,
+      "diversity": 0.48255813953488375
+    },
+    "1.5": {
+      "n_generated": 248,
+      "novelty_rate": 1.0,
+      "diversity": 0.6088709677419355
+    }
+  }
+}

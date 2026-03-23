@@ -1,0 +1,181 @@
+
+==========================================================
+  Nearest Neighbours -- CBOW (from scratch)
+  (vector_size=100, window=3)
+----------------------------------------------------------
+  'research'   -> top-5 similar:
+    1. multidisciplinary  (cosine = 0.4795)
+    2. strong             (cosine = 0.4708)
+    3. ug201112038        (cosine = 0.4475)
+    4. memorable          (cosine = 0.4375)
+    5. hyperlinking       (cosine = 0.4349)
+  'student'    -> top-5 similar:
+    1. sc                 (cosine = 0.5175)
+    2. waitlists          (cosine = 0.5048)
+    3. gen                (cosine = 0.5043)
+    4. obc                (cosine = 0.4959)
+    5. dual               (cosine = 0.4647)
+  'phd'        -> top-5 similar:
+    1. mtech              (cosine = 0.5101)
+    2. anchal             (cosine = 0.4789)
+    3. b15ee028           (cosine = 0.4720)
+    4. macrostates        (cosine = 0.4656)
+    5. j09050             (cosine = 0.4601)
+  'exam'       -> top-5 similar:
+    1. iitj22nas47        (cosine = 0.5613)
+    2. advt               (cosine = 0.5480)
+    3. postcode           (cosine = 0.5409)
+    4. english            (cosine = 0.5369)
+    5. designer           (cosine = 0.5342)
+==========================================================
+====================================================================
+  Analogy Experiments -- CBOW (from scratch)
+--------------------------------------------------------------------
+
+  Query : UG : BTech :: PG : ?
+  Formula: most_similar(+['btech','pg'], -['ug'])
+  Top answers:
+    1. filling              (cosine = 0.4694)
+    2. debiasing            (cosine = 0.4532)
+    3. bs                   (cosine = 0.4467)
+    4. objectives           (cosine = 0.4233)
+    5. rog                  (cosine = 0.4200)
+
+  Query : professor : research :: student : ?
+  Formula: most_similar(+['research','student'], -['professor'])
+  Top answers:
+    1. shutterbugs          (cosine = 0.4334)
+    2. art                  (cosine = 0.4098)
+    3. fosters              (cosine = 0.3965)
+    4. complacency          (cosine = 0.3797)
+    5. champion             (cosine = 0.3745)
+
+  Query : lab : experiment :: class : ?
+  Formula: most_similar(+['experiment','class'], -['lab'])
+  Top answers:
+    1. exceeds              (cosine = 0.3983)
+    2. lqeu                 (cosine = 0.3878)
+    3. adopted              (cosine = 0.3867)
+    4. lead                 (cosine = 0.3849)
+    5. provision            (cosine = 0.3842)
+
+  Query : IIT : Jodhpur :: NIT : ?
+  Formula: most_similar(+['jodhpur','nit'], -['iit'])
+  Top answers:
+    1. notice               (cosine = 0.4530)
+    2. affidavit            (cosine = 0.4485)
+    3. tesla                (cosine = 0.4302)
+    4. discrepancy          (cosine = 0.4042)
+    5. confidentially       (cosine = 0.4015)
+
+  Query : BTech : undergraduate :: MTech : ?
+  Formula: most_similar(+['undergraduate','mtech'], -['btech'])
+  Top answers:
+    1. postgraduate         (cosine = 0.5030)
+    2. tabletable           (cosine = 0.4527)
+    3. reply                (cosine = 0.4378)
+    4. ac                   (cosine = 0.4129)
+    5. slated               (cosine = 0.4127)
+
+====================================================================
+==========================================================
+  Nearest Neighbours -- Skip-gram with Negative Sampling (from scratch)
+  (vector_size=100, window=7)
+----------------------------------------------------------
+  'research'   -> top-5 similar:
+    1. sponsored          (cosine = 0.6416)
+    2. science            (cosine = 0.6377)
+    3. engineering        (cosine = 0.6350)
+    4. electrical         (cosine = 0.6312)
+    5. chemistry          (cosine = 0.6213)
+  'student'    -> top-5 similar:
+    1. obc                (cosine = 0.7251)
+    2. students           (cosine = 0.7095)
+    3. sc                 (cosine = 0.7058)
+    4. program            (cosine = 0.7053)
+    5. category           (cosine = 0.6921)
+  'phd'        -> top-5 similar:
+    1. regular            (cosine = 0.8632)
+    2. yes                (cosine = 0.8493)
+    3. professor          (cosine = 0.8229)
+    4. male               (cosine = 0.8147)
+    5. assistant          (cosine = 0.7924)
+  'exam'       -> top-5 similar:
+    1. syllabus           (cosine = 0.6769)
+    2. post               (cosine = 0.6408)
+    3. junior             (cosine = 0.6324)
+    4. written            (cosine = 0.6210)
+    5. candidates         (cosine = 0.6195)
+==========================================================
+====================================================================
+  Analogy Experiments -- Skip-gram with Negative Sampling (from scratch)
+--------------------------------------------------------------------
+
+  Query : UG : BTech :: PG : ?
+  Formula: most_similar(+['btech','pg'], -['ug'])
+  Top answers:
+    1. diploma              (cosine = 0.5648)
+    2. course               (cosine = 0.5408)
+    3. batches              (cosine = 0.5222)
+    4. intelligence         (cosine = 0.5102)
+    5. program              (cosine = 0.5089)
+
+  Query : professor : research :: student : ?
+  Formula: most_similar(+['research','student'], -['professor'])
+  Top answers:
+    1. students             (cosine = 0.6043)
+    2. academic             (cosine = 0.5894)
+    3. program              (cosine = 0.5792)
+    4. programmes           (cosine = 0.5544)
+    5. programme            (cosine = 0.5268)
+
+  Query : lab : experiment :: class : ?
+  Formula: most_similar(+['experiment','class'], -['lab'])
+  Top answers:
+    1. local                (cosine = 0.5316)
+    2. preference           (cosine = 0.5137)
+    3. supplier             (cosine = 0.5103)
+    4. l1                   (cosine = 0.5076)
+    5. paras                (cosine = 0.5067)
+
+  Query : IIT : Jodhpur :: NIT : ?
+  Formula: most_similar(+['jodhpur','nit'], -['iit'])
+  Top answers:
+    1. notice               (cosine = 0.5872)
+    2. form                 (cosine = 0.5700)
+    3. inviting             (cosine = 0.5588)
+    4. cpwd                 (cosine = 0.5320)
+    5. tender               (cosine = 0.5197)
+
+  Query : BTech : undergraduate :: MTech : ?
+  Formula: most_similar(+['undergraduate','mtech'], -['btech'])
+  Top answers:
+    1. postgraduate         (cosine = 0.5435)
+    2. obc                  (cosine = 0.4946)
+    3. opportunities        (cosine = 0.4878)
+    4. students             (cosine = 0.4864)
+    5. started              (cosine = 0.4755)
+
+====================================================================
+== Semantic Meaningfulness Discussion ===================================
+
+  1. UG : BTech :: PG : ?
+     Expected answer: 'mtech'.  IIT Jodhpur pages frequently mention
+     'B.Tech' alongside 'UG' and 'M.Tech' alongside 'PG', so the
+     embedding space should encode this relationship.
+
+  2. professor : research :: student : ?
+     Expected: 'project' or 'thesis'.  Tests role-based relationships.
+
+  3. lab : experiment :: class : ?
+     Expected: 'lecture' or 'course'.  Tests spatial-activity mapping.
+
+  4. IIT : Jodhpur :: NIT : ?
+     Expected: a city name.  Tests co-location knowledge.
+
+  General observation:
+     Skip-gram models tend to produce better analogy results on small
+     corpora because Skip-gram predicts context from centre words,
+     producing richer individual word representations. CBOW averages
+     context embeddings and is faster but may smooth out rare words.
+=========================================================================

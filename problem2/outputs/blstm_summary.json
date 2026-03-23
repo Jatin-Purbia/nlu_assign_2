@@ -1,0 +1,17 @@
+{
+  "model_name": "blstm",
+  "num_params": 1266102,
+  "vocab_size": 54,
+  "dataset_size": 1000,
+  "hparams": {
+    "embed_size": 64,
+    "hidden_size": 256,
+    "attn_size": 128,
+    "learning_rate": 0.003,
+    "batch_size": 32,
+    "grad_clip": 5.0,
+    "num_epochs": 400
+  },
+  "final_loss": 0.0009,
+  "min_loss": 0.0
+}

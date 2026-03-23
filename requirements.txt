@@ -1,0 +1,15 @@
+# ── Problem 1: Word2Vec on IIT Jodhpur data ──────────────────────────────────
+requests==2.31.0
+beautifulsoup4==4.12.2
+lxml==4.9.3
+gensim==4.3.2
+nltk==3.8.1
+scikit-learn==1.3.2
+matplotlib==3.8.0
+seaborn==0.13.0
+wordcloud==1.9.2
+numpy==1.26.0
+pandas==2.1.1
+
+# ── Problem 2: Character-level Name Generation ────────────────────────────────
+torch==2.1.0
