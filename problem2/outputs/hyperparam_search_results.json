@@ -6,9 +6,10 @@
       "attn_size": 128,
       "learning_rate": 0.003,
       "batch_size": 32,
-      "grad_clip": 5.0
+      "grad_clip": 5.0,
+      "dropout": 0.3
     },
-    "final_loss": 0.85608
+    "final_loss": 1.68308
   },
   "blstm": {
     "best_config": {
@@ -17,9 +18,10 @@
       "attn_size": 128,
       "learning_rate": 0.003,
       "batch_size": 32,
-      "grad_clip": 5.0
+      "grad_clip": 5.0,
+      "dropout": 0.3
     },
-    "final_loss": 0.0009
+    "final_loss": 0.73931
   },
   "attention": {
     "best_config": {
@@ -28,8 +30,9 @@
       "attn_size": 128,
       "learning_rate": 0.003,
       "batch_size": 32,
-      "grad_clip": 5.0
+      "grad_clip": 5.0,
+      "dropout": 0.3
     },
-    "final_loss": 0.00012
+    "final_loss": 0.7376
   }
 }

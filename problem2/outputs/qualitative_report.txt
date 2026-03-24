@@ -1,183 +1,153 @@
-╔══════════════════════════════════════════════════════════╗
-║      QUALITATIVE ANALYSIS — Character-level Name Gen      ║
-╚══════════════════════════════════════════════════════════╝
+== QUALITATIVE ANALYSIS -- Character-level Name Generation ==
 
-════════════════════════════════════════════════════════════
+============================================================
   Model: RNN
-────────────────────────────────────────────────────────────
+============================================================
 
-  ── Temperature = 0.5 ──
+  -- Temperature = 0.5 --
   Total generated : 500
-  Realism rate    : 0.984  (492/500 look Indian)
-  Failure modes   :
+  Realism rate    : 0.988  (494/500)
+  Failure modes:
     too_short            : 0
     too_long             : 0
-    memorised            : 500
+    memorised            : 450
     repeated_char        : 0
     no_vowel             : 0
   Sample (first 20):
-    Indrasen         |  Hariharan        |  Prasenjit        |  Shanmugam        |  Narayana       
-    Narayani         |  Parameshwar      |  Chandika         |  Vishal           |  Amandeep       
-    Saraswati        |  Pramoda          |  Yash             |  Satish           |  Prasad         
-    Yashraj          |  Sukhjot          |  Rajendra         |  Amandeep         |  Devyani        
+    Karunamayee      |  Naveed           |  Mohanprasad      |  Gurpreetkaur     |  Yashoda        
+    Ramakant         |  Prashant         |  Karunakara       |  Ruma             |  Saraladevi     
+    Devyani          |  Gurleen          |  Baldev           |  Maman            |  Shankarrao     
+    Surendra         |  Shankarrao       |  Amandeep         |  Shlok            |  Harikaani      
 
-  ── Temperature = 1.0 ──
-  Total generated : 500
-  Realism rate    : 0.964  (482/500 look Indian)
-  Failure modes   :
+  -- Temperature = 1.0 --
+  Total generated : 496
+  Realism rate    : 0.948  (470/496)
+  Failure modes:
     too_short            : 0
     too_long             : 0
-    memorised            : 486
+    memorised            : 137
     repeated_char        : 0
     no_vowel             : 0
   Sample (first 20):
-    Tania            |  Leeladhar        |  Samar            |  Vigal            |  Parvati        
-    Soham            |  Chandni          |  Danish           |  Geetha           |  Ramachandra    
-    Kanchan          |  Rashid           |  Duraisamy        |  Faisal           |  Aadhya         
-    Hemalatha        |  Navjot           |  Jagdish          |  Devansh          |  Jaiprakash     
+    Hitesh           |  Aagas            |  Kaihanya         |  Sagnaprasad      |  Ramakant       
+    Avantika         |  Eurgaljan        |  Ruuraf           |  Harprdetka       |  Satis          
+    Zafza            |  Harisvad         |  Urjan            |  Riya             |  Imnitha        
+    Himanshu         |  Prabhapramanlb   |  Ranjana          |  Anwa             |  Faryu          
 
-  ── Temperature = 1.5 ──
-  Total generated : 500
-  Realism rate    : 0.924  (462/500 look Indian)
-  Failure modes   :
-    too_short            : 0
-    too_long             : 1
-    memorised            : 369
+  -- Temperature = 1.5 --
+  Total generated : 494
+  Realism rate    : 0.794  (392/494)
+  Failure modes:
+    too_short            : 5
+    too_long             : 18
+    memorised            : 9
     repeated_char        : 0
-    no_vowel             : 0
+    no_vowel             : 5
   Sample (first 20):
-    Leila            |  Kunal            |  Olamudhankar     |  Yuvraj           |  Bwanapriya     
-    Murlidhar        |  Jivika           |  Naveen           |  Hitesh           |  Hemendra       
-    Jaynarayan       |  Aman             |  Moutab           |  Vilas            |  Pramod         
-    Jeevitha         |  Drashti          |  Vrinda           |  Yusuf            |  Waman          
+    Mihufyamlebyabfvdina  |  Outtika          |  Jwal             |  Tfesheimi        |  Gurnonb        
+    Banjotkfimqvoe   |  Zaimachonevwi    |  Chknvi           |  Kapil            |  Ssla           
+    Prertjjzthayi    |  Amrin            |  Gugnaa           |  Kayavangegvu     |  Asbwu          
+    Reozi            |  Visfapdac        |  Zhichaumramfnzinbtfh  |  Depeshkscfiybchayami  |  Pallterbolsh   
 
-════════════════════════════════════════════════════════════
+============================================================
   Model: BLSTM
-────────────────────────────────────────────────────────────
+============================================================
 
-  ── Temperature = 0.5 ──
-  Total generated : 500
-  Realism rate    : 1.000  (500/500 look Indian)
-  Failure modes   :
-    too_short            : 0
+  -- Temperature = 0.5 --
+  Total generated : 488
+  Realism rate    : 0.648  (316/488)
+  Failure modes:
+    too_short            : 5
     too_long             : 0
-    memorised            : 134
+    memorised            : 0
     repeated_char        : 0
-    no_vowel             : 0
+    no_vowel             : 7
   Sample (first 20):
-    Harnoha          |  Omalsid          |  Hardev           |  Hardev           |  Malsemi        
-    Mandhar          |  Harleen          |  Harleen          |  Harnooram        |  Omalsir        
-    Omalsir          |  Harleen          |  Harleen          |  Hardev           |  Malesh         
-    Harshan          |  Harlesh          |  Gaurishan        |  Parnoor          |  Harleen        
+    Vena             |  Lrik             |  Orif             |  Lena             |  Cziy           
+    Yun              |  Eemi             |  Vwna             |  His              |  Ecni           
+    Ovuh             |  Wieh             |  Omira            |  Yurs             |  Vakj           
+    Oejh             |  Sbij             |  Cqkt             |  Dopa             |  Tona           
 
-  ── Temperature = 1.0 ──
-  Total generated : 500
-  Realism rate    : 1.000  (500/500 look Indian)
-  Failure modes   :
-    too_short            : 0
+  -- Temperature = 1.0 --
+  Total generated : 482
+  Realism rate    : 0.434  (209/482)
+  Failure modes:
+    too_short            : 3
     too_long             : 0
-    memorised            : 38
+    memorised            : 0
     repeated_char        : 0
-    no_vowel             : 0
+    no_vowel             : 68
   Sample (first 20):
-    Omargi           |  Jagnar           |  Kalser           |  Jagnika          |  Hargen         
-    Lakshmi          |  Omandi           |  Daleshwar        |  Baljit           |  Karungai       
-    Omadevi          |  Delati           |  Jagnika          |  Handramohan      |  Harnath        
-    Qadev            |  Mandhar          |  Malishna         |  Omalish          |  Karlesh        
+    Gafw             |  Hrwa             |  Vwja             |  Dmka             |  Jdbf           
+    Yga              |  Ydip             |  Hopa             |  Nikv             |  Bedt           
+    Ydda             |  Kezwa            |  Lzyifa           |  Fizya            |  Zeny           
+    Sfgi             |  Meg              |  Lwts             |  Yiah             |  Bodhv          
 
-  ── Temperature = 1.5 ──
-  Total generated : 499
-  Realism rate    : 0.996  (497/499 look Indian)
-  Failure modes   :
-    too_short            : 0
-    too_long             : 0
-    memorised            : 14
+  -- Temperature = 1.5 --
+  Total generated : 478
+  Realism rate    : 0.362  (173/478)
+  Failure modes:
+    too_short            : 8
+    too_long             : 20
+    memorised            : 0
     repeated_char        : 0
-    no_vowel             : 0
+    no_vowel             : 91
   Sample (first 20):
-    Qadevi           |  Baljit           |  Saurshan         |  Omaykari         |  Yaresh         
-    Jagrin           |  Endar            |  Dadina           |  Dadevyali        |  Umanthi        
-    Varleen          |  Emad             |  Udamrao          |  Vadmit           |  Wendar         
-    Harshman         |  Saurisam         |  Nandel           |  Harinda          |  Parlees        
+    Eaixpa           |  Upka             |  Ygwak            |  Imal             |  Sqyan          
+    Omitoqqerbhmi    |  Mch              |  Dvizk            |  Ryinpokfephadvuenqh  |  Slah           
+    Qeboyh           |  Qiekw            |  Yyar             |  Mojt             |  Xewr           
+    Cglf             |  Yuxzakh          |  Peqnhvrbm        |  Rkyzm            |  Dkki           
 
-════════════════════════════════════════════════════════════
+============================================================
   Model: ATTENTION
-────────────────────────────────────────────────────────────
+============================================================
+  Temperature 0.5: no data found.
 
-  ── Temperature = 0.5 ──
-  Total generated : 18
-  Realism rate    : 0.944  (17/18 look Indian)
-  Failure modes   :
-    too_short            : 0
-    too_long             : 1
+  -- Temperature = 1.0 --
+  Total generated : 12
+  Realism rate    : 0.083  (1/12)
+  Failure modes:
+    too_short            : 8
+    too_long             : 0
     memorised            : 0
-    repeated_char        : 0
-    no_vowel             : 1
+    repeated_char        : 1
+    no_vowel             : 8
   Sample (first 20):
-    Jara             |  Jawa             |  Jyyyyyyyyyyyyyyyyyyy  |  Jara             |  Jawa           
-    Jaya             |  Faha             |  Jaya             |  Jada             |  Jaya           
-    Jaya             |  Jaya             |  Jaya             |  Jara             |  Jaya           
-    Jaya             |  Jara             |  Jaya           
+    Cou              |  Siw              |  Nh               |  Qh               |  Ftt            
+    Csl              |  Lw               |  Tt               |  Nr               |  At             
+    As               |  Bf             
 
-  ── Temperature = 1.0 ──
-  Total generated : 129
-  Realism rate    : 0.612  (79/129 look Indian)
-  Failure modes   :
-    too_short            : 0
-    too_long             : 32
-    memorised            : 1
-    repeated_char        : 2
-    no_vowel             : 29
-  Sample (first 20):
-    Sooooooooooooooooooo  |  Jyyyyyyyyyyyyyyyyyyy  |  Jaya             |  Myyyyyyyyyyyyyyyyyyy  |  Fihii          
-    Appppppppppppppppppp  |  Jawa             |  Jaya             |  Jawa             |  Jara           
-    Rzhzzzzh         |  Jada             |  Gyyyyyyyyyyyyyyyyyyy  |  Qzyzyyyyyyyyyyyyyyyy  |  Jawa           
-    Firiii           |  Jawa             |  Mohyyh           |  Fikii            |  Jyyyyyyyyyyyyyyyyyyy
-
-  ── Temperature = 1.5 ──
-  Total generated : 248
-  Realism rate    : 0.351  (87/248 look Indian)
-  Failure modes   :
-    too_short            : 1
-    too_long             : 85
+  -- Temperature = 1.5 --
+  Total generated : 154
+  Realism rate    : 0.097  (15/154)
+  Failure modes:
+    too_short            : 63
+    too_long             : 0
     memorised            : 0
-    repeated_char        : 8
-    no_vowel             : 73
+    repeated_char        : 3
+    no_vowel             : 78
   Sample (first 20):
-    Sooooooooooooooooooo  |  Apgppppppppppppppppp  |  Farra            |  Pooooooooooooooooooo  |  Sooooooooooooooooooo
-    Sofowwatwoww     |  Addddddddddddddddddd  |  Jawa             |  Pooooooooooooooooooo  |  Jpwprrzr       
-    Fehee            |  Aepepeee         |  Jhwa             |  Huyuyyyyyyyyyyyy  |  Faha           
-    Hyyyyyyyyyyyyyyyyyyy  |  Pzrzzzzzh        |  Hyyyyyyyyyyyyyyyyyyy  |  Jayayyyyyyyyyyyyyyyy  |  Jiii           
+    Jz               |  Ssxu             |  Vacld            |  Rbddcz           |  Mo             
+    Zd               |  Qp               |  Qtd              |  Ka               |  Ru             
+    Lqmnlef          |  Ms               |  Gvmlyg           |  Nma              |  Llaeqo         
+    Bso              |  Xo               |  Jfv              |  Dntsz            |  Wtq            
 
-════════════════════════════════════════════════════════════
-  Architecture Comparison Discussion
-────────────────────────────────────────────────────────────
+============================================================
+  Architecture Comparison
+============================================================
 
   VanillaRNN:
-    The simplest model.  Suffers from vanishing gradients over long names,
-    causing it to forget early characters.  Common failure: names that start
-    well but deteriorate into repeated consonants at the end.  Good at learning
-    common short name endings (e.g. "-a", "-sh", "-an") but poor at capturing
-    the phonological structure of longer South Indian names.
+    Simple model; suffers from vanishing gradients on long names.
+    Common failure: names that start well but deteriorate at the end.
 
   BidirectionalLSTM:
-    The LSTM gating mechanism (forget / input / output gates) alleviates
-    vanishing gradients significantly.  The bidirectional encoder provides
-    richer gradient signal during training, so the model learns the co-occurrence
-    of characters at different positions within a name.  Generated names tend to
-    be more coherent and structurally similar to real Indian names.  However,
-    the decoder is unidirectional at inference, so it cannot "look ahead".
-    Common failure: occasionally generates plausible prefixes with incoherent
-    suffixes (e.g. "Pra---vix" where the suffix drifts).
+    LSTM gating alleviates vanishing gradients. Bidirectional encoder
+    provides richer gradient signal during training. Generated names
+    tend to be more coherent. Decoder is unidirectional at inference.
 
   AttentionRNN:
-    The attention mechanism allows the decoder to selectively attend back to
-    any position in the previously generated prefix.  This is particularly
-    beneficial for Indian names that have repeated syllable patterns
-    (e.g. "Venkatesh" benefits from attending back to "Ven" when generating
-    "katesh").  At higher temperatures, this model produces the most diverse
-    outputs.  Common failure: at very low temperatures (T=0.5), the model
-    collapses to a small set of common name prefixes ("Raj", "San", "Man").
-    At high temperatures (T=1.5), it can generate non-Indian-sounding names.
+    Attention allows the decoder to selectively attend back to any
+    position in the generated prefix. Particularly helpful for Indian
+    names with repeated syllabic patterns. At low temperature (T=0.5),
+    may collapse to a small set of common prefixes.
     
-════════════════════════════════════════════════════════════
