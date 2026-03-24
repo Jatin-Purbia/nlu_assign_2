@@ -9,7 +9,7 @@
       "grad_clip": 5.0,
       "dropout": 0.3
     },
-    "final_loss": 1.68308
+    "final_loss": 1.67061
   },
   "blstm": {
     "best_config": {
@@ -21,7 +21,7 @@
       "grad_clip": 5.0,
       "dropout": 0.3
     },
-    "final_loss": 0.73931
+    "final_loss": 0.74121
   },
   "attention": {
     "best_config": {
@@ -33,6 +33,6 @@
       "grad_clip": 5.0,
       "dropout": 0.3
     },
-    "final_loss": 0.7376
+    "final_loss": 0.73846
   }
 }

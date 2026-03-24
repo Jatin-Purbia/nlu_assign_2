@@ -2,23 +2,23 @@
   "rnn": {
     "0.5": {
       "n_generated": 500,
-      "novelty_rate": 0.1,
-      "diversity": 0.576
+      "novelty_rate": 0.084,
+      "diversity": 0.592
     },
     "0.8": {
       "n_generated": 498,
-      "novelty_rate": 0.44377510040160645,
-      "diversity": 0.8634538152610441
+      "novelty_rate": 0.40963855421686746,
+      "diversity": 0.9016064257028112
     },
     "1.0": {
-      "n_generated": 496,
-      "novelty_rate": 0.7237903225806451,
-      "diversity": 0.9778225806451613
+      "n_generated": 499,
+      "novelty_rate": 0.6993987975951904,
+      "diversity": 0.9759519038076152
     },
     "1.2": {
-      "n_generated": 498,
-      "novelty_rate": 0.8755020080321285,
-      "diversity": 0.9899598393574297
+      "n_generated": 495,
+      "novelty_rate": 0.8808080808080808,
+      "diversity": 0.9959595959595959
     },
     "1.5": {
       "n_generated": 494,
@@ -28,29 +28,29 @@
   },
   "blstm": {
     "0.5": {
-      "n_generated": 488,
-      "novelty_rate": 1.0,
-      "diversity": 0.8934426229508197
+      "n_generated": 495,
+      "novelty_rate": 0.9939393939393939,
+      "diversity": 0.7696969696969697
     },
     "0.8": {
-      "n_generated": 493,
+      "n_generated": 495,
       "novelty_rate": 1.0,
-      "diversity": 0.9959432048681541
+      "diversity": 0.9737373737373738
     },
     "1.0": {
-      "n_generated": 482,
+      "n_generated": 492,
       "novelty_rate": 1.0,
-      "diversity": 0.995850622406639
+      "diversity": 0.9959349593495935
     },
     "1.2": {
-      "n_generated": 485,
+      "n_generated": 480,
       "novelty_rate": 1.0,
-      "diversity": 1.0
+      "diversity": 0.9979166666666667
     },
     "1.5": {
-      "n_generated": 478,
+      "n_generated": 489,
       "novelty_rate": 1.0,
-      "diversity": 1.0
+      "diversity": 0.9979550102249489
     }
   },
   "attention": {
@@ -60,24 +60,24 @@
       "diversity": 0.0
     },
     "0.8": {
-      "n_generated": 2,
+      "n_generated": 28,
       "novelty_rate": 1.0,
       "diversity": 1.0
     },
     "1.0": {
-      "n_generated": 12,
+      "n_generated": 101,
+      "novelty_rate": 1.0,
+      "diversity": 0.9801980198019802
+    },
+    "1.2": {
+      "n_generated": 169,
       "novelty_rate": 1.0,
       "diversity": 1.0
     },
-    "1.2": {
-      "n_generated": 53,
-      "novelty_rate": 1.0,
-      "diversity": 0.9811320754716981
-    },
     "1.5": {
-      "n_generated": 154,
+      "n_generated": 284,
       "novelty_rate": 1.0,
-      "diversity": 0.9805194805194806
+      "diversity": 0.9894366197183099
     }
   }
 }

@@ -51,7 +51,7 @@ def sample_next_char(logits, temperature):
 def generate_rnn_name(model, dataset, temperature, device):
     sos_idx = dataset.char2idx[SOS_TOKEN]
     eos_idx = dataset.char2idx[EOS_TOKEN]
-    h = model.rnn_cell.init_hidden(batch_size=1, device=device)
+    h = torch.zeros(1, 1, model.hidden_size, device=device)  # (num_layers, batch, hidden)
     x = torch.tensor([[sos_idx]], device=device)
     generated_chars = []
     with torch.no_grad():
@@ -98,8 +98,9 @@ def generate_attention_name(model, dataset, temperature, device):
                 break
             generated_chars.append(next_idx)
             x = torch.tensor([[next_idx]], device=device)
-            new_h = model.encoder_cell(model.embedding(x).squeeze(1), h_dec)
-            enc_outputs = torch.cat([enc_outputs, new_h.unsqueeze(1)], dim=1)
+            new_embed = model.embedding(x.squeeze(1))                          # (1, E)
+            new_enc_out, _ = model.encoder(new_embed.unsqueeze(1))             # (1, 1, H)
+            enc_outputs = torch.cat([enc_outputs, new_enc_out], dim=1)
     return dataset.decode_tensor(torch.tensor(generated_chars))
 
 

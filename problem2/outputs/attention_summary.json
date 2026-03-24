@@ -13,6 +13,6 @@
     "dropout": 0.3,
     "num_epochs": 400
   },
-  "final_loss": 0.7376,
-  "min_loss": 0.73531
+  "final_loss": 0.73846,
+  "min_loss": 0.73478
 }

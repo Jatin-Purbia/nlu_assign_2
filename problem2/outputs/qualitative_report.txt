@@ -6,97 +6,97 @@
 
   -- Temperature = 0.5 --
   Total generated : 500
-  Realism rate    : 0.988  (494/500)
+  Realism rate    : 0.986  (493/500)
   Failure modes:
     too_short            : 0
     too_long             : 0
-    memorised            : 450
+    memorised            : 458
     repeated_char        : 0
     no_vowel             : 0
   Sample (first 20):
-    Karunamayee      |  Naveed           |  Mohanprasad      |  Gurpreetkaur     |  Yashoda        
-    Ramakant         |  Prashant         |  Karunakara       |  Ruma             |  Saraladevi     
-    Devyani          |  Gurleen          |  Baldev           |  Maman            |  Shankarrao     
-    Surendra         |  Shankarrao       |  Amandeep         |  Shlok            |  Harikaani      
+    Umamaheswari     |  Amritjot         |  Sharda           |  Mangalam         |  Manish         
+    Aniket           |  Narayani         |  Navaot           |  Gurjit           |  Rohan          
+    Subramanian      |  Amandeep         |  Saravanan        |  Parth            |  Vidya          
+    Navayani         |  Parman           |  Bashir           |  Sanchita         |  Sukhdeep       
 
   -- Temperature = 1.0 --
-  Total generated : 496
-  Realism rate    : 0.948  (470/496)
+  Total generated : 499
+  Realism rate    : 0.936  (467/499)
   Failure modes:
     too_short            : 0
-    too_long             : 0
-    memorised            : 137
+    too_long             : 3
+    memorised            : 150
     repeated_char        : 0
     no_vowel             : 0
   Sample (first 20):
-    Hitesh           |  Aagas            |  Kaihanya         |  Sagnaprasad      |  Ramakant       
-    Avantika         |  Eurgaljan        |  Ruuraf           |  Harprdetka       |  Satis          
-    Zafza            |  Harisvad         |  Urjan            |  Riya             |  Imnitha        
-    Himanshu         |  Prabhapramanlb   |  Ranjana          |  Anwa             |  Faryu          
+    Sripurna         |  Rama             |  Dimagaiya        |  Chandrakant      |  Vasunthama     
+    Kalpeshwar       |  Sadia            |  Simmai           |  Srushti          |  Nijesh         
+    Riti             |  Ankfuti          |  Dola             |  Ompaska          |  Gurdeepkyiri   
+    Manohar          |  Elangovan        |  Sannab           |  Maigashizq       |  Tejeshgar      
 
   -- Temperature = 1.5 --
   Total generated : 494
-  Realism rate    : 0.794  (392/494)
+  Realism rate    : 0.753  (372/494)
   Failure modes:
-    too_short            : 5
-    too_long             : 18
+    too_short            : 0
+    too_long             : 32
     memorised            : 9
     repeated_char        : 0
     no_vowel             : 5
   Sample (first 20):
-    Mihufyamlebyabfvdina  |  Outtika          |  Jwal             |  Tfesheimi        |  Gurnonb        
-    Banjotkfimqvoe   |  Zaimachonevwi    |  Chknvi           |  Kapil            |  Ssla           
-    Prertjjzthayi    |  Amrin            |  Gugnaa           |  Kayavangegvu     |  Asbwu          
-    Reozi            |  Visfapdac        |  Zhichaumramfnzinbtfh  |  Depeshkscfiybchayami  |  Pallterbolsh   
+    Srukhtq          |  Uesha            |  Ingwznaqh        |  Undrxg           |  Pwgaeeafu      
+    Kalirocrlsindbraua  |  Zeeppan          |  Puaujaw          |  Shaubyikiiq      |  Qaisovk        
+    Jwbjiz           |  Kulfeeb          |  Cwitkrtf         |  Hansuno          |  Bhnvrana       
+    Tejexqkam        |  Archanf          |  Jojjeshwcr       |  Lahikijqgau      |  Mcrima         
 
 ============================================================
   Model: BLSTM
 ============================================================
 
   -- Temperature = 0.5 --
-  Total generated : 488
-  Realism rate    : 0.648  (316/488)
+  Total generated : 495
+  Realism rate    : 0.430  (213/495)
   Failure modes:
-    too_short            : 5
+    too_short            : 7
     too_long             : 0
-    memorised            : 0
+    memorised            : 3
     repeated_char        : 0
-    no_vowel             : 7
+    no_vowel             : 18
   Sample (first 20):
-    Vena             |  Lrik             |  Orif             |  Lena             |  Cziy           
-    Yun              |  Eemi             |  Vwna             |  His              |  Ecni           
-    Ovuh             |  Wieh             |  Omira            |  Yurs             |  Vakj           
-    Oejh             |  Sbij             |  Cqkt             |  Dopa             |  Tona           
+    Syar             |  Uqqi             |  Uya              |  Mpd              |  Ufh            
+    Udva             |  Iar              |  Uen              |  Uraq             |  Udki           
+    Uor              |  Uare             |  Arab             |  Vap              |  Xra            
+    Qrad             |  Aor              |  Uqa              |  Tfg              |  Fakr           
 
   -- Temperature = 1.0 --
-  Total generated : 482
-  Realism rate    : 0.434  (209/482)
+  Total generated : 492
+  Realism rate    : 0.309  (152/492)
   Failure modes:
-    too_short            : 3
+    too_short            : 10
     too_long             : 0
     memorised            : 0
     repeated_char        : 0
-    no_vowel             : 68
+    no_vowel             : 94
   Sample (first 20):
-    Gafw             |  Hrwa             |  Vwja             |  Dmka             |  Jdbf           
-    Yga              |  Ydip             |  Hopa             |  Nikv             |  Bedt           
-    Ydda             |  Kezwa            |  Lzyifa           |  Fizya            |  Zeny           
-    Sfgi             |  Meg              |  Lwts             |  Yiah             |  Bodhv          
+    Fazpcypuvhynu    |  Gaw              |  Eou              |  Bari             |  Nmro           
+    Lrnh             |  Slj              |  Zfzi             |  Soqa             |  Mas            
+    Kaq              |  Uvkk             |  Ucqmq            |  Uat              |  Ughh           
+    Ukuv             |  Raz              |  Xakd             |  Larn             |  Mrhb           
 
   -- Temperature = 1.5 --
-  Total generated : 478
-  Realism rate    : 0.362  (173/478)
+  Total generated : 489
+  Realism rate    : 0.266  (130/489)
   Failure modes:
-    too_short            : 8
+    too_short            : 9
     too_long             : 20
     memorised            : 0
     repeated_char        : 0
-    no_vowel             : 91
+    no_vowel             : 114
   Sample (first 20):
-    Eaixpa           |  Upka             |  Ygwak            |  Imal             |  Sqyan          
-    Omitoqqerbhmi    |  Mch              |  Dvizk            |  Ryinpokfephadvuenqh  |  Slah           
-    Qeboyh           |  Qiekw            |  Yyar             |  Mojt             |  Xewr           
-    Cglf             |  Yuxzakh          |  Peqnhvrbm        |  Rkyzm            |  Dkki           
+    Ckqgqp           |  Qqg              |  Upocygpnrexfw    |  Iby              |  Juiqujt        
+    Yovoh            |  Irzaha           |  Yzdp             |  Jlt              |  Igr            
+    Fpramsisqlyf     |  Ydtn             |  Gfab             |  Bqbfi            |  Udlw           
+    Kovzxtudlaiknqyvqj  |  Bzv              |  Larzg            |  Loni             |  Amxie          
 
 ============================================================
   Model: ATTENTION
@@ -104,33 +104,34 @@
   Temperature 0.5: no data found.
 
   -- Temperature = 1.0 --
-  Total generated : 12
-  Realism rate    : 0.083  (1/12)
+  Total generated : 101
+  Realism rate    : 0.208  (21/101)
   Failure modes:
-    too_short            : 8
-    too_long             : 0
+    too_short            : 14
+    too_long             : 1
     memorised            : 0
-    repeated_char        : 1
-    no_vowel             : 8
+    repeated_char        : 2
+    no_vowel             : 34
   Sample (first 20):
-    Cou              |  Siw              |  Nh               |  Qh               |  Ftt            
-    Csl              |  Lw               |  Tt               |  Nr               |  At             
-    As               |  Bf             
+    Llllyllkcl       |  Zasjf            |  Ahza             |  Bfdidddddqddkd   |  Qjoyv          
+    Eom              |  Gsc              |  Ja               |  Oooyoohoc        |  Apa            
+    Onnlgssn         |  Shwtus           |  Xszeisb          |  Uef              |  Eiij           
+    Uiym             |  Epfzkppp         |  Wc               |  Llle             |  Vyqfcaw        
 
   -- Temperature = 1.5 --
-  Total generated : 154
-  Realism rate    : 0.097  (15/154)
+  Total generated : 284
+  Realism rate    : 0.275  (78/284)
   Failure modes:
-    too_short            : 63
-    too_long             : 0
+    too_short            : 21
+    too_long             : 16
     memorised            : 0
     repeated_char        : 3
     no_vowel             : 78
   Sample (first 20):
-    Jz               |  Ssxu             |  Vacld            |  Rbddcz           |  Mo             
-    Zd               |  Qp               |  Qtd              |  Ka               |  Ru             
-    Lqmnlef          |  Ms               |  Gvmlyg           |  Nma              |  Llaeqo         
-    Bso              |  Xo               |  Jfv              |  Dntsz            |  Wtq            
+    Sjz              |  Kis              |  Gadoewozfr       |  Zzzfzcmiaamzywi  |  Xpmpp          
+    Ebuccgahgfwwclixbnh  |  Znhukd           |  Kzamraoemhnrs    |  Hipsip           |  Ddhkdhucypj    
+    Niqxiki          |  Jpwfoz           |  Zzhzapplqdzhhhkkrmv  |  Jltwqgg          |  Ndlvllfllrjgbvh
+    Wdyv             |  Mga              |  Mcnqfbw          |  Fbxepxch         |  Nlhinnwnnhn    
 
 ============================================================
   Architecture Comparison

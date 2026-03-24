@@ -1,26 +1,6 @@
-import math
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
-
-class VanillaRNNCell(nn.Module):
-    def __init__(self, input_size: int, hidden_size: int):
-        super().__init__()
-        self.input_size  = input_size
-        self.hidden_size = hidden_size
-        self.W_ih = nn.Parameter(torch.empty(hidden_size, input_size))
-        self.W_hh = nn.Parameter(torch.empty(hidden_size, hidden_size))
-        self.b_ih = nn.Parameter(torch.zeros(hidden_size))
-        self.b_hh = nn.Parameter(torch.zeros(hidden_size))
-        nn.init.xavier_uniform_(self.W_ih)
-        nn.init.xavier_uniform_(self.W_hh)
-
-    def forward(self, x, h_prev):
-        return torch.tanh(x @ self.W_ih.T + self.b_ih + h_prev @ self.W_hh.T + self.b_hh)
-
-    def init_hidden(self, batch_size: int, device: torch.device):
-        return torch.zeros(batch_size, self.hidden_size, device=device)
 
 
 class VanillaRNN(nn.Module):
@@ -29,50 +9,23 @@ class VanillaRNN(nn.Module):
         self.vocab_size   = vocab_size
         self.hidden_size  = hidden_size
         self.embedding    = nn.Embedding(vocab_size, embed_size, padding_idx=0)
-        self.rnn_cell     = VanillaRNNCell(embed_size, hidden_size)
+        self.rnn          = nn.RNN(embed_size, hidden_size, batch_first=True)
         self.output_layer = nn.Linear(hidden_size, vocab_size)
         self.drop         = nn.Dropout(dropout)
 
     def forward(self, inputs, lengths):
-        batch_size, seq_len = inputs.shape
-        embeds = self.drop(self.embedding(inputs))
-        h = self.rnn_cell.init_hidden(batch_size, inputs.device)
-        logits_list = []
-        for t in range(seq_len):
-            h = self.rnn_cell(embeds[:, t, :], h)
-            logits_list.append(self.output_layer(self.drop(h)).unsqueeze(1))
-        return torch.cat(logits_list, dim=1)
+        embeds = self.drop(self.embedding(inputs))          # (B, T, E)
+        output, _ = self.rnn(embeds)                        # (B, T, H)
+        return self.output_layer(self.drop(output))         # (B, T, V)
 
     def generate_step(self, x, h):
-        embed = self.embedding(x.squeeze(1))
-        h_new = self.rnn_cell(embed, h)
-        return self.output_layer(h_new), h_new
+        # x: (1, 1)  h: (1, 1, H)
+        embed = self.embedding(x.squeeze(1))                # (1, E)
+        output, h_new = self.rnn(embed.unsqueeze(1), h)     # output: (1,1,H)
+        return self.output_layer(output.squeeze(1)), h_new  # logits: (1,V), h: (1,1,H)
 
     def count_parameters(self) -> int:
         return sum(p.numel() for p in self.parameters() if p.requires_grad)
-
-
-class LSTMCell(nn.Module):
-    def __init__(self, input_size: int, hidden_size: int):
-        super().__init__()
-        self.input_size  = input_size
-        self.hidden_size = hidden_size
-        self.W_all = nn.Parameter(torch.empty(4 * hidden_size, input_size))
-        self.U_all = nn.Parameter(torch.empty(4 * hidden_size, hidden_size))
-        self.b_all = nn.Parameter(torch.zeros(4 * hidden_size))
-        nn.init.xavier_uniform_(self.W_all)
-        nn.init.xavier_uniform_(self.U_all)
-
-    def forward(self, x, h_prev, c_prev):
-        gates = x @ self.W_all.T + h_prev @ self.U_all.T + self.b_all
-        f, i, g, o = gates.chunk(4, dim=1)
-        c_t = torch.sigmoid(f) * c_prev + torch.sigmoid(i) * torch.tanh(g)
-        h_t = torch.sigmoid(o) * torch.tanh(c_t)
-        return h_t, c_t
-
-    def init_states(self, batch_size: int, device: torch.device):
-        return (torch.zeros(batch_size, self.hidden_size, device=device),
-                torch.zeros(batch_size, self.hidden_size, device=device))
 
 
 class BidirectionalLSTM(nn.Module):
@@ -81,46 +34,40 @@ class BidirectionalLSTM(nn.Module):
         self.vocab_size   = vocab_size
         self.hidden_size  = hidden_size
         self.embedding    = nn.Embedding(vocab_size, embed_size, padding_idx=0)
-        self.encoder_fwd  = LSTMCell(embed_size, hidden_size)
-        self.encoder_bwd  = LSTMCell(embed_size, hidden_size)
+        self.encoder      = nn.LSTM(embed_size, hidden_size, batch_first=True, bidirectional=True)
         self.bridge_h     = nn.Linear(2 * hidden_size, hidden_size)
         self.bridge_c     = nn.Linear(2 * hidden_size, hidden_size)
-        self.decoder_cell = LSTMCell(embed_size, hidden_size)
+        self.decoder_cell = nn.LSTMCell(embed_size, hidden_size)
         self.output_layer = nn.Linear(hidden_size, vocab_size)
         self.drop         = nn.Dropout(dropout)
 
-    def _encode(self, embeds, lengths):
-        batch_size, seq_len, _ = embeds.shape
-        device = embeds.device
-        hf, cf = self.encoder_fwd.init_states(batch_size, device)
-        hb, cb = self.encoder_bwd.init_states(batch_size, device)
-        for t in range(seq_len):
-            hf, cf = self.encoder_fwd(embeds[:, t, :], hf, cf)
-        for t in reversed(range(seq_len)):
-            hb, cb = self.encoder_bwd(embeds[:, t, :], hb, cb)
-        h_dec = torch.tanh(self.bridge_h(torch.cat([hf, hb], dim=1)))
-        c_dec = torch.tanh(self.bridge_c(torch.cat([cf, cb], dim=1)))
-        return h_dec, c_dec
+    def _encode(self, embeds):
+        # h_n, c_n: (2, B, H)
+        _, (h_n, c_n) = self.encoder(embeds)
+        h = torch.tanh(self.bridge_h(torch.cat([h_n[0], h_n[1]], dim=1)))  # (B, H)
+        c = torch.tanh(self.bridge_c(torch.cat([c_n[0], c_n[1]], dim=1)))  # (B, H)
+        return h, c
 
     def forward(self, inputs, lengths):
         embeds = self.drop(self.embedding(inputs))
-        h, c   = self._encode(embeds, lengths)
+        h, c   = self._encode(embeds)
         logits_list = []
         for t in range(inputs.shape[1]):
-            h, c = self.decoder_cell(embeds[:, t, :], h, c)
+            h, c = self.decoder_cell(embeds[:, t, :], (h, c))
             logits_list.append(self.output_layer(self.drop(h)).unsqueeze(1))
         return torch.cat(logits_list, dim=1)
 
     def generate_step(self, x, h, c):
         embed = self.embedding(x.squeeze(1))
-        h_new, c_new = self.decoder_cell(embed, h, c)
+        h_new, c_new = self.decoder_cell(embed, (h, c))
         return self.output_layer(h_new), h_new, c_new
 
     def get_initial_decoder_state(self, inputs, lengths, device):
         if inputs is None or inputs.numel() == 0:
             return (torch.zeros(1, self.hidden_size, device=device),
                     torch.zeros(1, self.hidden_size, device=device))
-        return self._encode(self.embedding(inputs), lengths)
+        embeds = self.embedding(inputs)
+        return self._encode(embeds)
 
     def count_parameters(self) -> int:
         return sum(p.numel() for p in self.parameters() if p.requires_grad)
@@ -131,22 +78,19 @@ class BahdanauAttention(nn.Module):
 
     def __init__(self, hidden_size: int, attn_size: int):
         super().__init__()
-        self.W_a = nn.Parameter(torch.empty(attn_size, hidden_size))
-        self.U_a = nn.Parameter(torch.empty(attn_size, hidden_size))
-        self.V_a = nn.Parameter(torch.empty(1, attn_size))
-        nn.init.xavier_uniform_(self.W_a)
-        nn.init.xavier_uniform_(self.U_a)
-        nn.init.xavier_uniform_(self.V_a)
+        self.W_a = nn.Linear(hidden_size, attn_size, bias=False)
+        self.U_a = nn.Linear(hidden_size, attn_size, bias=False)
+        self.V_a = nn.Linear(attn_size, 1, bias=False)
 
     def forward(self, enc_outputs, dec_hidden, mask=None):
-        src_len      = enc_outputs.shape[1]
-        W_enc        = enc_outputs @ self.W_a.T
-        U_dec        = (dec_hidden @ self.U_a.T).unsqueeze(1).expand(-1, src_len, -1)
-        energy       = (torch.tanh(W_enc + U_dec) @ self.V_a.T).squeeze(-1)
+        # enc_outputs: (B, S, H), dec_hidden: (B, H)
+        energy = self.V_a(torch.tanh(
+            self.W_a(enc_outputs) + self.U_a(dec_hidden).unsqueeze(1)
+        )).squeeze(-1)                                       # (B, S)
         if mask is not None:
             energy = energy.masked_fill(mask, float("-inf"))
         attn_weights = F.softmax(energy, dim=1)
-        context      = (attn_weights.unsqueeze(1) @ enc_outputs).squeeze(1)
+        context = (attn_weights.unsqueeze(1) @ enc_outputs).squeeze(1)  # (B, H)
         return context, attn_weights
 
 
@@ -157,23 +101,18 @@ class AttentionRNN(nn.Module):
         self.vocab_size   = vocab_size
         self.hidden_size  = hidden_size
         self.embedding    = nn.Embedding(vocab_size, embed_size, padding_idx=0)
-        self.encoder_cell = VanillaRNNCell(embed_size, hidden_size)
+        self.encoder      = nn.RNN(embed_size, hidden_size, batch_first=True)
         self.attention    = BahdanauAttention(hidden_size, attn_size)
-        self.decoder_cell = VanillaRNNCell(embed_size + hidden_size, hidden_size)
+        self.decoder_cell = nn.RNNCell(embed_size + hidden_size, hidden_size)
         self.output_layer = nn.Linear(hidden_size, vocab_size)
         self.drop         = nn.Dropout(dropout)
 
     def _encode(self, embeds):
-        batch_size, seq_len, _ = embeds.shape
-        h = self.encoder_cell.init_hidden(batch_size, embeds.device)
-        enc_outputs = []
-        for t in range(seq_len):
-            h = self.encoder_cell(embeds[:, t, :], h)
-            enc_outputs.append(h.unsqueeze(1))
-        return torch.cat(enc_outputs, dim=1), h
+        enc_outputs, h_n = self.encoder(embeds)   # (B, T, H), (1, B, H)
+        return enc_outputs, h_n.squeeze(0)        # h_dec: (B, H)
 
     def forward(self, inputs, lengths):
-        embeds   = self.drop(self.embedding(inputs))
+        embeds = self.drop(self.embedding(inputs))
         enc_outputs, h_dec = self._encode(embeds)
         pad_mask = (inputs == 0)
         logits_list = []
