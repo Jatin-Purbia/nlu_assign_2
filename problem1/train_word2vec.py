@@ -337,13 +337,8 @@ def train_model(
 
 
 def evaluate_model(result: Word2VecResult, probe_words: list) -> float:
-    """
-    Three-component analogy-quality score:
-      0.3 * neighbour coherence  +  0.5 * semantic pair similarity  +  0.2 * 3CosAdd hit-rate
-    """
     wv = result.wv
 
-    # 1. Neighbour coherence
     nbr_total, nbr_count = 0.0, 0
     for word in probe_words:
         if word in wv:
@@ -352,7 +347,6 @@ def evaluate_model(result: Word2VecResult, probe_words: list) -> float:
                 nbr_count += 1
     nbr_score = nbr_total / max(nbr_count, 1)
 
-    # 2. Semantic pair similarity
     pair_total, pair_count = 0.0, 0
     for w1, w2 in SEMANTIC_PAIRS:
         if w1 in wv and w2 in wv:
@@ -362,7 +356,6 @@ def evaluate_model(result: Word2VecResult, probe_words: list) -> float:
             pair_count += 1
     pair_score = pair_total / max(pair_count, 1)
 
-    # 3. 3CosAdd analogy hit-rate
     hits, triples = 0, 0
     for a, b, c in ANALOGY_TRIPLES:
         if a in wv and b in wv and c in wv:

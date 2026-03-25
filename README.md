@@ -1,45 +1,57 @@
 # NLU Assignment 2
 
-Two independent NLP/DL problems — each has its own folder with a single `run_all.py` entry-point.
+Two problems, each in its own folder with a `run_all.py` to run everything end-to-end.
 
 ---
 
-## Repository Layout
+## Folder structure
 
 ```
 assign-2/
-├── TrainingNames.txt          # ~1000 Indian names (required by Problem 2)
+├── TrainingNames.txt          # ~1000 Indian names (needed by Problem 2)
 ├── problem1/                  # Word2Vec on IIT Jodhpur corpus
-│   ├── scraper.py
-│   ├── preprocessor.py
-│   ├── train_word2vec.py
-│   ├── semantic_analysis.py
-│   ├── visualize.py
-│   └── run_all.py             ← single entry-point
 └── problem2/                  # Character-level Indian name generation
-    ├── dataset.py
-    ├── models.py
-    ├── train.py
-    ├── generate.py
-    ├── analysis.py
-    └── run_all.py             ← single entry-point
 ```
 
 ---
 
 ## Problem 1 — Word2Vec on IIT Jodhpur Corpus
 
-### What it does
+Scrapes the IIT Jodhpur website, preprocesses the text, trains CBOW and Skip-gram Word2Vec models from scratch (PyTorch), then runs semantic analysis and visualisation.
 
-| Step | Script | Purpose |
-|------|--------|---------|
-| 1 | `scraper.py` | BFS-crawls `iitj.ac.in` (up to 200 pages, depth 2) and saves raw text to `data/raw_corpus.txt` |
-| 2 | `preprocessor.py` | Cleans text, tokenises with NLTK, removes stopwords/boilerplate, saves `data/processed_corpus.txt` + word-cloud PNG |
-| 3 | `train_word2vec.py` | Grid-searches CBOW & Skip-gram (dim ∈ {50,100,200}, window ∈ {3,5,7}, neg ∈ {5,10}, epochs=20) using gensim; saves the best models to `models/` |
-| 4 | `semantic_analysis.py` | Reports top-5 nearest neighbours for *research / student / phd / exam* and runs 5 word-analogy experiments (e.g. `UG:BTech::PG:?`) |
-| 5 | `visualize.py` | PCA and t-SNE plots for colour-coded word groups; side-by-side CBOW vs. Skip-gram comparison |
+### Setup
 
-### Output files produced
+```bash
+pip install requests beautifulsoup4 lxml nltk gensim wordcloud matplotlib scikit-learn torch
+```
+
+NLTK data is downloaded automatically on first run.
+
+### Running
+
+```bash
+cd problem1
+
+# Full pipeline (scrape → preprocess → train → analyse → visualise)
+python run_all.py
+
+# If you already have data/raw_corpus.txt from a previous run
+python run_all.py --skip-scrape
+```
+
+Individual steps can also be run separately:
+
+```bash
+python scraper.py              # crawl iitj.ac.in, saves data/raw_corpus.txt
+python preprocessor.py         # clean + tokenise, saves data/processed_corpus.txt
+python train_word2vec.py       # grid search + train best CBOW & Skip-gram
+python semantic_analysis.py    # nearest neighbours + analogy experiments
+python visualize.py            # PCA and t-SNE plots
+```
+
+> Scraping ~500 pages takes a few minutes. Use `--skip-scrape` on subsequent runs.
+
+### Output
 
 ```
 problem1/
@@ -47,91 +59,68 @@ problem1/
 │   ├── raw_corpus.txt
 │   └── processed_corpus.txt
 ├── models/
-│   ├── best_cbow.model
-│   └── best_skipgram.model
+│   ├── best_cbow.pkl
+│   └── best_skipgram.pkl
 └── outputs/
     ├── wordcloud.png
     ├── semantic_results.txt
     └── plots/
-        ├── pca_cbow.png
-        ├── tsne_cbow.png
-        ├── pca_skip-gram.png
-        ├── tsne_skip-gram.png
-        ├── comparison_pca.png
-        └── comparison_tsne.png
+        ├── pca_cbow.png  /  tsne_cbow.png
+        ├── pca_skip-gram.png  /  tsne_skip-gram.png
+        └── comparison_pca.png  /  comparison_tsne.png
 ```
-
-### Dependencies
-
-```
-pip install requests beautifulsoup4 lxml nltk gensim wordcloud matplotlib scikit-learn
-```
-
-NLTK data (downloaded automatically on first run): `punkt`, `punkt_tab`, `stopwords`.
-
-### How to run
-
-```bash
-cd problem1
-
-# Full pipeline (scrape + preprocess + train + analyse + visualise)
-python run_all.py
-
-# Skip scraping if raw_corpus.txt already exists
-python run_all.py --skip-scrape
-```
-
-Or run individual steps:
-
-```bash
-python scraper.py              # Step 1 only
-python preprocessor.py         # Step 2 only (needs raw_corpus.txt)
-python train_word2vec.py       # Step 3 only (needs processed_corpus.txt)
-python semantic_analysis.py    # Step 4 only (needs trained models)
-python visualize.py            # Step 5 only (needs trained models)
-```
-
-> **Note:** Scraping ~200 pages takes a few minutes (1 s polite delay per request). If you already have `data/raw_corpus.txt` from a previous run, use `--skip-scrape`.
 
 ---
 
 ## Problem 2 — Character-Level Indian Name Generation
 
-### What it does
+Trains three sequence models (VanillaRNN, BidirectionalLSTM, AttentionRNN) from scratch on a dataset of Indian names, then generates new names and analyses the results.
 
-Three sequence models are implemented **from scratch** using only PyTorch primitives (no `nn.RNN`, `nn.LSTM`, etc.).
+### Setup
 
-| Step | Script | Purpose |
-|------|--------|---------|
-| 0 | — | Verifies `TrainingNames.txt` exists and has ~1000 names |
-| 1 | `train.py` | Trains **VanillaRNN**, **BidirectionalLSTM**, **AttentionRNN** for 200 epochs each; saves checkpoints + loss curves |
-| 2 | `generate.py` | Generates 500 names per model × 5 temperatures (0.5, 0.8, 1.0, 1.2, 1.5); computes **Novelty Rate** and **Diversity** |
-| 3 | `analysis.py` | Qualitative analysis — realism rate, failure modes, length distributions, character frequency plots, architecture comparison report |
+```bash
+pip install torch matplotlib numpy
+```
 
-### Models
+GPU is used automatically if available, otherwise falls back to CPU.
 
-| Model | Architecture |
-|-------|-------------|
-| `VanillaRNN` | Elman RNN cell → embedding → linear output |
-| `BidirectionalLSTM` | Bi-LSTM encoder (fwd + bwd) → bridge → uni-directional LSTM decoder |
-| `AttentionRNN` | RNN encoder → Bahdanau additive attention → RNN decoder |
+### Running
 
-### Output files produced
+Make sure `TrainingNames.txt` is in the `assign-2/` root before running.
+
+```bash
+cd problem2
+
+# Full pipeline (train → generate → analyse)
+python run_all.py
+
+# Skip training if checkpoints already exist
+python run_all.py --skip-train
+
+# Generate fewer names (useful for quick testing)
+python run_all.py --n 100
+```
+
+Individual steps:
+
+```bash
+python train.py                    # train all three models (runs hyperparameter search)
+python train.py --model rnn        # train one model only
+python train.py --no-search        # skip grid search, use default hyperparameters
+python generate.py --n 200         # generate names (needs trained checkpoints)
+python analysis.py                 # qualitative report + plots
+```
+
+> Training all three models with the full hyperparameter search takes a while on CPU (~30–60 min depending on hardware). Use `--skip-train` on subsequent runs, or `--no-search` to skip the grid search.
+
+### Output
 
 ```
 problem2/outputs/
-├── rnn_model.pt
-├── blstm_model.pt
-├── attention_model.pt
-├── rnn_loss_curve.png
-├── blstm_loss_curve.png
-├── attention_loss_curve.png
-├── rnn_summary.json
-├── blstm_summary.json
-├── attention_summary.json
-├── generated_rnn_t05.txt          # one file per model × temperature
-├── generated_rnn_t08.txt
-├── ...  (15 files total)
+├── rnn_model.pt / blstm_model.pt / attention_model.pt
+├── rnn_loss_curve.png / blstm_loss_curve.png / attention_loss_curve.png
+├── rnn_summary.json / blstm_summary.json / attention_summary.json
+├── generated_rnn_t05.txt ... generated_attention_t15.txt  (15 files)
 ├── metrics.json
 ├── qualitative_report.txt
 └── plots/
@@ -139,80 +128,16 @@ problem2/outputs/
     └── char_frequencies.png
 ```
 
-### Dependencies
-
-```
-pip install torch matplotlib numpy
-```
-
-GPU is used automatically if CUDA is available; falls back to CPU.
-
-### How to run
-
-```bash
-cd problem2
-
-# Full pipeline (train + generate + analyse)
-python run_all.py
-
-# Skip training if checkpoints already exist
-python run_all.py --skip-train
-
-# Generate fewer names (faster for testing)
-python run_all.py --n 100
-```
-
-Or run individual steps:
-
-```bash
-python train.py                    # train all three models
-python train.py --model rnn        # train one model only
-python generate.py --n 200         # generate names (needs checkpoints)
-python analysis.py                 # qualitative report (needs generated files)
-```
-
-> **Note:** Training 3 models × 200 epochs on CPU takes ~5–15 minutes depending on hardware. Use `--skip-train` on subsequent runs.
-
 ---
 
-## Quick-start (both problems)
+## Quick start (both problems)
 
 ```bash
-# Install all dependencies
 pip install requests beautifulsoup4 lxml nltk gensim wordcloud matplotlib scikit-learn torch numpy
 
-# Problem 1
-cd problem1 && python run_all.py --skip-scrape   # omit --skip-scrape on first run
+# Problem 1 (skip scrape if raw_corpus.txt already exists)
+cd problem1 && python run_all.py --skip-scrape
 
 # Problem 2
 cd ../problem2 && python run_all.py
 ```
-
----
-
-## Hyperparameter Summary
-
-### Problem 1 — Word2Vec grid search
-
-| Parameter | Values |
-|-----------|--------|
-| Architecture | CBOW, Skip-gram |
-| `vector_size` | 50, 100, 200 |
-| `window` | 3, 5, 7 |
-| `negative` | 5, 10 |
-| `epochs` | 20 |
-
-Best model selected by average top-5 neighbour hit count for probe words.
-
-### Problem 2 — Name generation
-
-| Parameter | Value |
-|-----------|-------|
-| `embed_size` | 32 |
-| `hidden_size` | 128 |
-| `attn_size` | 64 (AttentionRNN only) |
-| `learning_rate` | 0.001 (Adam) |
-| `batch_size` | 32 |
-| `num_epochs` | 200 |
-| `grad_clip` | 5.0 |
-| Temperatures | 0.5, 0.8, 1.0, 1.2, 1.5 |
