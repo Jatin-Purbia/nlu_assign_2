@@ -1,4 +1,4 @@
-import os, sys, pickle
+import os, sys, json
 import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -11,7 +11,7 @@ PROCESSED_FILE = os.path.join(SCRIPT_DIR, "data", "processed_corpus.txt")
 MODELS_DIR     = os.path.join(SCRIPT_DIR, "models")
 OUT_PATH       = os.path.join(MODELS_DIR, "word2vec_300d.pkl")
 
-TARGET_WORD    = "engineeing"
+TARGET_WORD    = "jodhpur"
 
 def get_300d_model() -> Word2VecResult:
     if os.path.exists(OUT_PATH):
@@ -35,19 +35,6 @@ def get_300d_model() -> Word2VecResult:
     result.save(OUT_PATH)
     print(f"    Saved -> {OUT_PATH}")
     return result
-
-
-def get_pretrained_embedding(word: str) -> np.ndarray:
-    print(f"\n[2] Loading GloVe-300d pretrained model for '{word}' ...")
-    import gensim.downloader as api
-    model = api.load("glove-wiki-gigaword-300")
-    if word in model:
-        vec = model[word]
-        print(f"    Found '{word}' in GloVe-300d vocab")
-        return vec
-    else:
-        print(f"    '{word}' not in GloVe-300d either")
-        return None
 
 
 def show_embedding(label: str, word: str, vec: np.ndarray):
@@ -80,13 +67,11 @@ if __name__ == "__main__":
             break
 
     if TARGET_WORD in wv:
-        show_embedding("Custom Word2Vec 300d", TARGET_WORD, wv[TARGET_WORD])
+        show_embedding("Custom CBOW 300d", TARGET_WORD, wv[TARGET_WORD])
+        vec = wv[TARGET_WORD]
+        save_path = os.path.join(MODELS_DIR, f"{TARGET_WORD}_cbow_300d.json")
+        with open(save_path, "w") as f:
+            json.dump({"word": TARGET_WORD, "dim": len(vec), "vector": vec.tolist()}, f)
+        print(f"\n  Embedding saved -> {save_path}")
     else:
-        print(f"\n  '{TARGET_WORD}' not in custom corpus vocab.")
-        print(f"  Fetching from GloVe-300d pretrained ...")
-        vec = get_pretrained_embedding(TARGET_WORD)
-        if vec is not None:
-            show_embedding("GloVe-300d (pretrained)", TARGET_WORD, vec)
-            save_path = os.path.join(MODELS_DIR, f"{TARGET_WORD}_glove300d.npy")
-            np.save(save_path, vec)
-            print(f"\n  Embedding saved -> {save_path}")
+        print(f"\n  '{TARGET_WORD}' not in vocabulary.")
