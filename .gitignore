@@ -32,3 +32,5 @@ problem1/models/
 # Any similarly named directories anywhere in the repo
 **/pdfs/
 **/models/
+
+report.tex
