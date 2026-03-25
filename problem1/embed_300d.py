@@ -11,7 +11,7 @@ PROCESSED_FILE = os.path.join(SCRIPT_DIR, "data", "processed_corpus.txt")
 MODELS_DIR     = os.path.join(SCRIPT_DIR, "models")
 OUT_PATH       = os.path.join(MODELS_DIR, "word2vec_300d.pkl")
 
-TARGET_WORD    = "jodhpur"
+TARGET_WORD    = "btech"
 
 def get_300d_model() -> Word2VecResult:
     if os.path.exists(OUT_PATH):
